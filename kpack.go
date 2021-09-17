@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/binary"
-	"fmt"
 	"io"
 	"reflect"
 )
@@ -49,7 +48,6 @@ func ScanPack(buf *bytes.Buffer) (*bufio.Scanner, int) {
 	*/
 	bf := bytes.NewBuffer(sz[:2])
 	binary.Read(bf, binary.BigEndian, &in)
-	fmt.Println(in)
 	scanner := bufio.NewScanner(buf)
 	scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) {
 		if !atEOF {
