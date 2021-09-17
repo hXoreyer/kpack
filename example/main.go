@@ -23,7 +23,6 @@ func (p *Package) String() string {
 	return fmt.Sprintf("length:%d msglen:%d msg:%s sexlen:%d sex:%s age:%d", p.Length, p.MsgLen, p.Msg, p.SexLen, p.Sex, p.Age)
 }
 
-//35 + 2 + 6 + 2 + 5 + 2 + 4 + 2
 func main() {
 	pack := Package{
 		Msg: []byte("现在时间是:" + time.Now().Format("2006-01-02 15:04:05")),
@@ -36,8 +35,8 @@ func main() {
 	for i := 0; i < 4; i++ {
 		kpack.Pack(buf, &pack)
 	}
-	scanner := kpack.ScanPack(buf)
-	res, _ := kpack.UnPack(scanner, 4, func(r io.Reader) interface{} {
+	scanner, size := kpack.ScanPack(buf)
+	res, _ := kpack.UnPack(scanner, size, func(r io.Reader) interface{} {
 		p := &Package{}
 		binary.Read(r, binary.BigEndian, &p.Length)
 		binary.Read(r, binary.BigEndian, &p.MsgLen)
