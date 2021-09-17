@@ -11,6 +11,14 @@
 |       PASS       |                                          |            |           |              |
 |        ok        |        github.com/hxoreyer/kpack         |   1.400s   |           |              |
 
+### 使用
+
+```shell
+go get -u github.com/hxoreyer/kpack
+```
+
+
+
 ### 例子
 
 首先我们模拟粘包
