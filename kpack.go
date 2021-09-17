@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/binary"
+	"fmt"
 	"io"
 	"reflect"
 )
@@ -39,7 +40,16 @@ func UnPack(scanner *bufio.Scanner, bufSize int, up UnPackFunc) ([]interface{}, 
 	return s, i
 }
 
-func ScanPack(buf *bytes.Buffer) *bufio.Scanner {
+func ScanPack(buf *bytes.Buffer) (*bufio.Scanner, int) {
+	var in int16
+	sz := buf.Bytes()
+	/*
+		fmt.Println(sz[:2])
+		in = len(buf.Bytes())/int(int16(sz[0])<<8|int16(sz[1])) + 1
+	*/
+	bf := bytes.NewBuffer(sz[:2])
+	binary.Read(bf, binary.BigEndian, &in)
+	fmt.Println(in)
 	scanner := bufio.NewScanner(buf)
 	scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) {
 		if !atEOF {
@@ -51,5 +61,5 @@ func ScanPack(buf *bytes.Buffer) *bufio.Scanner {
 		}
 		return
 	})
-	return scanner
+	return scanner, int(in)
 }

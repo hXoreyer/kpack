@@ -26,8 +26,9 @@ func BenchmarkKpack(b *testing.B) {
 		// TODO: Your Code Here
 		buft := new(bytes.Buffer)
 		buft.Write(buf.Bytes())
-		scanner := ScanPack(buft)
-		res, _ := UnPack(scanner, 4, func(r io.Reader) interface{} {
+		scanner, size := ScanPack(buft)
+		//解包
+		UnPack(scanner, size, func(r io.Reader) interface{} {
 			p := &Package{}
 			binary.Read(r, binary.BigEndian, &p.Length)
 			binary.Read(r, binary.BigEndian, &p.MsgLen)
@@ -39,10 +40,6 @@ func BenchmarkKpack(b *testing.B) {
 			binary.Read(r, binary.BigEndian, &p.Age)
 			return p
 		})
-
-		for _, v := range res {
-			fmt.Println(v)
-		}
 	}
 }
 
