@@ -59,5 +59,5 @@ func ScanPack(buf *bytes.Buffer) (*bufio.Scanner, int) {
 		}
 		return
 	})
-	return scanner, int(in)
+	return scanner, int(buf.Len() / int(in))
 }

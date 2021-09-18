@@ -11,6 +11,7 @@ import (
 
 func BenchmarkKpack(b *testing.B) {
 	// TODO: Initialize
+	b.ResetTimer()
 	pack := Package{
 		Msg: []byte("现在时间是:" + time.Now().Format("2006-01-02 15:04:05")),
 		Sex: []byte("男"),
